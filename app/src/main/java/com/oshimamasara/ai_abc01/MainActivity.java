@@ -46,13 +46,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle(R.string.app_name);
         ButterKnife.bind(this);
         abcClassifier = new AI(this);
 
         //paintView = (PaintView) findViewById(R.id.canvas);
         DisplayMetrics metrics = new DisplayMetrics();
-
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         paintView.onSizeChanged(metrics);
 
@@ -60,6 +59,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onPredictClicked();
+            }
+        });
+
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClearClicked();
             }
         });
     }
@@ -84,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void clearCanvas(View view) {
-        paintView.clearCanvas();
+
+    public void onClearClicked() {
+        paintView.clear();
         mResultText.setText("");
         previewImage.setImageBitmap(null);
     }
+
 
 }
