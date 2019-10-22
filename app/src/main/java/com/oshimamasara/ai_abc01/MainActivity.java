@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int PIXEL_WIDTH = 128;
     private AI abcClassifier;
 
-
     //private PaintView paintView;
 
     @BindView(R.id.predict_button)
@@ -31,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.text_result)
     TextView mResultText;
+
+    @BindView(R.id.predict_text)
+    TextView mPredictText;
 
     @BindView(R.id.canvas)
     PaintView paintView;
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
             String predict = answere[digit] ;
 
             mResultText.setText(getString(R.string.found_digits, predict));
+            mPredictText.setText(getString(R.string.preview_scaled));
+
         } else {
             mResultText.setText(getString(R.string.not_detected));
         }
@@ -90,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void onClearClicked() {
         paintView.clear();
         mResultText.setText("");
+        mPredictText.setText("");
         previewImage.setImageBitmap(null);
     }
 

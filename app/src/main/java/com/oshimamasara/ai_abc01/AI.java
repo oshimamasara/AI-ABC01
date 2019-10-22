@@ -7,9 +7,7 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.os.SystemClock;
 import android.util.Log;
-
 import org.tensorflow.lite.Interpreter;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -22,28 +20,15 @@ public class AI {
 
     private final String TAG = this.getClass().getSimpleName();
 
-    // The tensorflow lite file
     private Interpreter tflite;
-
-    // Input byte buffer
     private ByteBuffer inputBuffer = null;
-
-    // Output array [batch_size, 10]
     private float[][] abcOutput = null;
-
-    // Name of the file in the assets folder
     private static final String MODEL_PATH = "abc.tflite";
-
-    // Specify the output size
     private static final int NUMBER_LENGTH = 26;
-
-    // Specify the input size
     private static final int DIM_BATCH_SIZE = 1;
     private static final int DIM_IMG_SIZE_X = 128;
     private static final int DIM_IMG_SIZE_Y = 128;
     private static final int DIM_PIXEL_SIZE = 1;
-
-    // Number of bytes to hold a float (32 bits / float) / (8 bits / byte) = 4 bytes / float
     private static final int BYTE_SIZE_OF_FLOAT = 4;
 
     public AI(Activity activity){
@@ -83,15 +68,8 @@ public class AI {
             Log.d(TAG, "Output for " + Integer.toString(i) + ": " + Float.toString(value));
             predict.add(value);
             Log.d(TAG, "predict★ :  " + predict);
-            //if (value == 1f) {
-            //    return i;
-            //}
         }
         Log.d(TAG, "predict最終★ :  " + predict);
-
-        //Float min = Collections.min(predict);
-        //Float max = Collections.max(predict);
-        //Log.d(TAG, "predict 最大値★ :  " + max);
 
         Float out = predict.get(0);
         int index = 0;
@@ -107,8 +85,6 @@ public class AI {
         Log.d(TAG, "最大値★ :  " + out);
         Log.d(TAG, "INDEX★ :  " + index);
         return index;
-
-        //return -1;
     }
 
     private MappedByteBuffer loadModelFile(Activity activity) throws IOException  {
@@ -125,7 +101,6 @@ public class AI {
             return;
         }
 
-        // Reset the image data
         inputBuffer.rewind();
 
         int width = bitmap.getWidth();
@@ -133,20 +108,15 @@ public class AI {
 
         long startTime = SystemClock.uptimeMillis();
 
-        // The bitmap shape should be 28 x 28
         int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
 
         for (int i = 0; i < pixels.length; ++i) {
-            // Set 0 for white and 255 for black pixels
             int pixel = pixels[i];
-            // The color of the input is black so the blue channel will be 0xFF.
             int channel = pixel & 0xff;
             inputBuffer.putFloat(0xff - channel);
         }
         long endTime = SystemClock.uptimeMillis();
         Log.d(TAG, "Time cost to put values into ByteBuffer: " + Long.toString(endTime - startTime));
     }
-
-
 }

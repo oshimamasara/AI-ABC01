@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.jar.Attributes;
 
 public class PaintView extends View {
 
@@ -55,7 +54,6 @@ public class PaintView extends View {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setXfermode(null);
         mPaint.setAlpha(0xff);
-
         mEmboss = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.4f, 6, 3.5f);
         mBlur = new BlurMaskFilter(5, BlurMaskFilter.Blur.NORMAL);
     }
@@ -75,7 +73,7 @@ public class PaintView extends View {
         strokeWidth = BRUSH_SIZE;
     }
 
-    /*
+
     public void normal() {
         emboss = false;
         blur = false;
@@ -90,8 +88,6 @@ public class PaintView extends View {
         emboss = false;
         blur = true;
     }
-
-     */
 
     public void clear() {
         backgroundColor = DEFAULT_BG_COLOR;
@@ -110,14 +106,12 @@ public class PaintView extends View {
             mPaint.setStrokeWidth(fp.strokeWidth);
             mPaint.setMaskFilter(null);
 
-            /*
             if (fp.emboss)
                 mPaint.setMaskFilter(mEmboss);
             else if (fp.blur)
                 mPaint.setMaskFilter(mBlur);
-             */
-            mCanvas.drawPath(fp.path, mPaint);
 
+            mCanvas.drawPath(fp.path, mPaint);
         }
 
         canvas.drawBitmap(mBitmap, 0, 0, mBitmapPaint);
