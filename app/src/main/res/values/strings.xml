@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AI-ABC01</string>
+    <string name="found_digits">判定結果 = %1$s</string>
+    <string name="not_detected">Not detected</string>
 </resources>
